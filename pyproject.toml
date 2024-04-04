@@ -22,6 +22,7 @@ dev = [
     "mkdocs",
     "mkdocs-include-markdown-plugin",
     "mkdocs-material",
+    "mkdocs-jupyter",
     "python-markdown-math",
 ]
 
