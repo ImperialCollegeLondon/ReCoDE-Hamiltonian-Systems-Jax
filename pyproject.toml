@@ -19,6 +19,10 @@ dev = [
     "pre-commit",
     "pytest",
     "pytest-cov",
+    "mkdocs",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-material",
+    "python-markdown-math",
 ]
 
 [tool.pytest.ini_options]
