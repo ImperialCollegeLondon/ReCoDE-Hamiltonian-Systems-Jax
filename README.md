@@ -10,9 +10,9 @@ This ReCoDE is an introduction to Hamiltonian dynamics, and contains demonstrati
 
 ## Learning Outcomes
 
-- Understanding of conservative systems
-- Simulating dynamics in Python/Jax
-- Visualisation of 2d and 3d dynamics
+- Basic understanding of conservative systems
+- Learn how to simulate dynamics using Jax in Python
+- Ability to visualise 2d and 3d dynamics
 
 | Task       | Time    |
 | ---------- | ------- |
