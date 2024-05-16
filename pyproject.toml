@@ -29,6 +29,9 @@ dev = [
 [tool.pytest.ini_options]
 addopts = "-v -p no:warnings --cov=hamiltonian_systems_jax --cov-report=html --doctest-modules"
 
+[tool.ruff]
+line-length = 120
+
 [tool.ruff.lint]
 select = ["D", "E", "F", "I"] # pydocstyle, pycodestyle, Pyflakes, isort
 
