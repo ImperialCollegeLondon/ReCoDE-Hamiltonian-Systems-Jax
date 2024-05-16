@@ -1,28 +1,18 @@
 <!-- Your Project title, make it sound catchy! -->
 
-# Project title
+# Hamiltonian systems in Jax
 
 <!-- Provide a short description to your project -->
 
 ## Description
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae pulvinar
-mauris. Praesent sollicitudin rutrum mauris sed congue. Donec vel orci elit.
-Phasellus luctus sodales elementum. Donec lacinia semper lorem, volutpat
-molestie arcu bibendum mollis. Nulla nec massa vitae sapien varius vulputate
-vel vitae ex. Curabitur convallis iaculis elit at faucibus. Sed eget facilisis
-orci, ut consequat neque.
-
-<!-- What should the students going through your exemplar learn -->
+This ReCoDE is an introduction to Hamiltonian dynamics, and contains demonstrations of how Python and Jax can be used to simulate and visualise phase space and associated trajectories.
 
 ## Learning Outcomes
 
-- Skill 1
-- Skill 2
-- Skill 3
-
-<!-- How long should they spend reading and practising using your Code.
-Provide your best estimate -->
+- Basic understanding of conservative systems
+- Learn how to simulate dynamics using Jax in Python
+- Ability to visualise 2d and 3d dynamics
 
 | Task       | Time    |
 | ---------- | ------- |
@@ -30,6 +20,10 @@ Provide your best estimate -->
 | Practising | 3 hours |
 
 ## Requirements
+
+Undergraduate level calculus, linear algebra and a basic understanding of physics are required.
+
+Resources:
 
 <!--
 If your exemplar requires students to have a background knowledge of something
@@ -79,6 +73,10 @@ Solutions to the above can be found in `solutions`.
 
 ## Getting Started
 
+Notebook:
+
+``` notebooks/[plot] Example nbody trajectory plot.ipynb```
+
 <!-- An overview of the files and folder in the exemplar.
 Not all files and directories need to be listed, just the important
 sections of your project, like the learning material, the code, the tests, etc.
@@ -95,21 +93,14 @@ in a tree node.
 
 ```log
 .
-├── examples
-│   ├── ex1
-│   └── ex2
-├── src
-|   ├── file1.py
-|   ├── file2.cpp
+├── hdynamics
+│   ├── hdynamics.py
+│   └── odeint.py
+│   └── utils.py
+├── notebooks
 |   ├── ...
-│   └── data
-├── app
-├── docs
-├── main
-└── test
+├── ...
 ```
-
-<!-- Change this to your License. Make sure you have added the file on GitHub -->
 
 ## License
 
