@@ -4,10 +4,32 @@
 #
 #    pip-compile
 #
-jax[cpu]==0.4.25
+diffrax==0.5.0
     # via hamiltonian_systems_jax (pyproject.toml)
+equinox==0.11.4
+    # via
+    #   diffrax
+    #   lineax
+    #   optimistix
+jax[cpu]==0.4.25
+    # via
+    #   diffrax
+    #   equinox
+    #   hamiltonian_systems_jax (pyproject.toml)
+    #   lineax
+    #   optimistix
 jaxlib==0.4.25
     # via jax
+jaxtyping==0.2.28
+    # via
+    #   diffrax
+    #   equinox
+    #   lineax
+    #   optimistix
+lineax==0.0.4
+    # via
+    #   diffrax
+    #   optimistix
 ml-dtypes==0.3.2
     # via
     #   jax
@@ -16,12 +38,23 @@ numpy==1.26.4
     # via
     #   jax
     #   jaxlib
+    #   jaxtyping
     #   ml-dtypes
     #   opt-einsum
     #   scipy
 opt-einsum==3.3.0
     # via jax
+optimistix==0.0.7
+    # via diffrax
 scipy==1.12.0
     # via
     #   jax
     #   jaxlib
+typeguard==2.13.3
+    # via jaxtyping
+typing-extensions==4.11.0
+    # via
+    #   diffrax
+    #   equinox
+    #   lineax
+    #   optimistix
