@@ -4,6 +4,8 @@
 #
 #    pip-compile --extra=dev --output-file=dev-requirements.txt pyproject.toml
 #
+appnope==0.1.4
+    # via ipykernel
 asttokens==2.4.1
     # via stack-data
 attrs==23.2.0
@@ -34,22 +36,35 @@ colorama==0.4.6
     # via mkdocs-material
 comm==0.2.2
     # via ipykernel
+contourpy==1.2.1
+    # via matplotlib
 coverage[toml]==7.4.4
     # via pytest-cov
+cycler==0.12.1
+    # via matplotlib
 debugpy==1.8.1
     # via ipykernel
 decorator==5.1.1
     # via ipython
 defusedxml==0.7.1
     # via nbconvert
+diffrax==0.5.0
+    # via hamiltonian_systems_jax (pyproject.toml)
 distlib==0.3.8
     # via virtualenv
+equinox==0.11.4
+    # via
+    #   diffrax
+    #   lineax
+    #   optimistix
 executing==2.0.1
     # via stack-data
 fastjsonschema==2.19.1
     # via nbformat
 filelock==3.13.3
     # via virtualenv
+fonttools==4.51.0
+    # via matplotlib
 ghp-import==2.1.0
     # via mkdocs
 identify==2.5.35
@@ -63,9 +78,20 @@ ipykernel==6.29.4
 ipython==8.23.0
     # via ipykernel
 jax[cpu]==0.4.25
-    # via hamiltonian_systems_jax (pyproject.toml)
+    # via
+    #   diffrax
+    #   equinox
+    #   hamiltonian_systems_jax (pyproject.toml)
+    #   lineax
+    #   optimistix
 jaxlib==0.4.25
     # via jax
+jaxtyping==0.2.28
+    # via
+    #   diffrax
+    #   equinox
+    #   lineax
+    #   optimistix
 jedi==0.19.1
     # via ipython
 jinja2==3.1.3
@@ -92,6 +118,12 @@ jupyterlab-pygments==0.3.0
     # via nbconvert
 jupytext==1.16.1
     # via mkdocs-jupyter
+kiwisolver==1.4.5
+    # via matplotlib
+lineax==0.0.4
+    # via
+    #   diffrax
+    #   optimistix
 markdown==3.6
     # via
     #   mkdocs
@@ -107,6 +139,8 @@ markupsafe==2.1.5
     #   jinja2
     #   mkdocs
     #   nbconvert
+matplotlib==3.9.0
+    # via hamiltonian_systems_jax (pyproject.toml)
 matplotlib-inline==0.1.6
     # via
     #   ipykernel
@@ -154,18 +188,24 @@ nodeenv==1.8.0
     # via pre-commit
 numpy==1.26.4
     # via
+    #   contourpy
     #   jax
     #   jaxlib
+    #   jaxtyping
+    #   matplotlib
     #   ml-dtypes
     #   opt-einsum
     #   scipy
 opt-einsum==3.3.0
     # via jax
+optimistix==0.0.7
+    # via diffrax
 packaging==24.0
     # via
     #   build
     #   ipykernel
     #   jupytext
+    #   matplotlib
     #   mkdocs
     #   nbconvert
     #   pytest
@@ -179,6 +219,8 @@ pathspec==0.12.1
     # via mkdocs
 pexpect==4.9.0
     # via ipython
+pillow==10.3.0
+    # via matplotlib
 pip-tools==7.4.1
     # via hamiltonian_systems_jax (pyproject.toml)
 platformdirs==4.2.0
@@ -206,6 +248,8 @@ pygments==2.17.2
     #   nbconvert
 pymdown-extensions==10.7.1
     # via mkdocs-material
+pyparsing==3.1.2
+    # via matplotlib
 pyproject-hooks==1.0.0
     # via
     #   build
@@ -220,6 +264,7 @@ python-dateutil==2.9.0.post0
     # via
     #   ghp-import
     #   jupyter-client
+    #   matplotlib
 python-markdown-math==0.8
     # via hamiltonian_systems_jax (pyproject.toml)
 pyyaml==6.0.1
@@ -281,8 +326,15 @@ traitlets==5.14.2
     #   nbclient
     #   nbconvert
     #   nbformat
+typeguard==2.13.3
+    # via jaxtyping
 typing-extensions==4.10.0
-    # via ipython
+    # via
+    #   diffrax
+    #   equinox
+    #   ipython
+    #   lineax
+    #   optimistix
 urllib3==2.2.1
     # via requests
 virtualenv==20.25.1
