@@ -10,7 +10,7 @@ authors = [
     { name = "Chris Cave-Ayland", email = "c.cave-ayland@imperial.ac.uk" },
 ]
 requires-python = ">=3.11"
-dependencies = ["jax[cpu]", "diffrax"]
+dependencies = ["jax[cpu]", "diffrax", "matplotlib"]
 
 [project.optional-dependencies]
 dev = [
