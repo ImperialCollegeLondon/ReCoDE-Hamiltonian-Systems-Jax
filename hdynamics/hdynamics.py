@@ -1,11 +1,9 @@
 """Implementation of dynamics (e.g. specification of Hamiltonians)."""
 
-from abc import ABC
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 import jax
 import jax.numpy as jnp
-import matplotlib
 
 
 class Dynamics(ABC):
@@ -42,5 +40,3 @@ class Dynamics(ABC):
     def plot_H(self, ax):
         """Plot the Hamiltonian."""
         raise NotImplementedError("No energy plotting available for selected dynamical system.")
-
-

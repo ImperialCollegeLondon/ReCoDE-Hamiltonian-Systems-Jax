@@ -1,15 +1,10 @@
-import re
+"""Implementatino of N-body system."""
 
-from abc import abstractmethod
-from functools import partial
-
-import jax
 import jax.numpy as jnp
-
 import matplotlib
-import matplotlib.pyplot as plt
 
 from hdynamics.hdynamics import Dynamics
+
 
 class Nbody(Dynamics):
     """Dynamics of N-body system."""
@@ -33,18 +28,22 @@ class Nbody(Dynamics):
         """
         assert len(x) == self.pdim, f"x does not have correct shape of {self.pdim}. Got x of shape {x.shape}."
 
-        masses = jnp.array([self.masses for _ in range(self.n_bodies)]) if type(self.masses) == float else self.masses
-        
+        masses = (
+            jnp.array([self.masses for _ in range(self.n_bodies)]) if isinstance(self.masses, float) else self.masses
+        )
+
         q, p = x.reshape(2, self.n_bodies, self.dim)
 
-        cross_masses = masses ** 2
+        cross_masses = masses**2
 
-        H_kinetic = jnp.sum((jnp.linalg.norm(p, axis=1) ** 2) / (2 * masses))
+        H_kinetic = jnp.sum((jnp.linalg.norm(p, axis=1) ** 2) / (2 * cross_masses))
 
-        q_dists = q.reshape(self.n_bodies, 1, self.dim) - q.reshape(1, self.n_bodies, self.dim) # (n_bodies, n_bodies, dim)
-        q_quads = jnp.sum(q_dists ** 2, axis=2) # (n_bodies, n_bodies)
-        masses_outer = jnp.outer(masses, masses) # (n_bodies, n_bodies)
-        H_potential = -jnp.sum(jnp.tril(masses_outer / jnp.sqrt(q_quads + (eps ** 2)), -1))
+        q_dists = q.reshape(self.n_bodies, 1, self.dim) - q.reshape(
+            1, self.n_bodies, self.dim
+        )  # (n_bodies, n_bodies, dim)
+        q_quads = jnp.sum(q_dists**2, axis=2)  # (n_bodies, n_bodies)
+        masses_outer = jnp.outer(masses, masses)  # (n_bodies, n_bodies)
+        H_potential = -jnp.sum(jnp.tril(masses_outer / jnp.sqrt(q_quads + (eps**2)), -1))
 
         H = H_kinetic + H_potential
 
@@ -65,11 +64,10 @@ class Nbody(Dynamics):
         Input:
             trajectory: (T, 2, n_bodies, dim), where T denotes time.
         """
-
         if self.dim != 2:
             raise NotImplementedError("N-body system plotting currently only supported for 2d systems")
 
-        T = trajectory.shape[0] # time
+        T = trajectory.shape[0]  # time
 
         trajectory = trajectory.reshape(T, 2, self.n_bodies, self.dim)
 
@@ -116,5 +114,3 @@ class Nbody(Dynamics):
         ax.set_yticks([])
 
         ax.set_aspect("equal")
-
-

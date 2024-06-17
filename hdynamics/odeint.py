@@ -1,8 +1,6 @@
 """ODE solver."""
 
-import diffrax
 import jax
-import jax.numpy as jnp
 import jax.experimental.ode
 
 
@@ -25,11 +23,9 @@ def ode_int(
             atol (float): absolute tolerance
             adjoint: type of adjoint method used
     """
-
     try:
         solution = jax.experimental.ode.odeint(f, x, t_span, rtol=rtol, atol=atol)
     except ValueError as e:
-        print(f"Could not solve ODE: ", e)
-    
-    return solution
+        print("Could not solve ODE: ", e)
 
+    return solution

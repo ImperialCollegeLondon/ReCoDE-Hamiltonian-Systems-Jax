@@ -1,15 +1,9 @@
-import re
+"""Implementation of simple harmonic oscillator."""
 
-from abc import abstractmethod
-from functools import partial
-
-import jax
 import jax.numpy as jnp
 
-import matplotlib
-import matplotlib.pyplot as plt
-
 from hdynamics.hdynamics import Dynamics
+
 
 class HarmonicOscillator(Dynamics):
     """Dynamics of simple harmonic oscillator."""
@@ -152,5 +146,3 @@ class HarmonicOscillator(Dynamics):
         ax.set_ylabel("p")
 
         ax.set_aspect("equal")
-
-
