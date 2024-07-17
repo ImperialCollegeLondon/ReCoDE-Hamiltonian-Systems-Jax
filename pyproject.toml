@@ -2,7 +2,7 @@
 exclude = ["htmlcov"] # Exclude the coverage report file from setuptools package finder
 
 [project]
-name = "hamiltonian_systems_jax"
+name = "hdynamics"
 version = "0.0.1"
 authors = [
     { name = "Tycho van der Ouderaa", email = "t.van-der-ouderaa21@imperial.ac.uk" },

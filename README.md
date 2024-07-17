@@ -6,7 +6,7 @@ In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and dem
 
 ## Getting Started
 
-To get started, proceed by going to the <a href="01introduction/">Introduction</a> page.
+To get started, proceed by going to the <a href="02Introduction-to-Hamiltonian-systems/">Introduction</a> page.
 
 ## Learning Outcomes
 
@@ -30,21 +30,6 @@ Undergraduate level calculus, linear algebra and a basic understanding of physic
 Package requiements can be found in the `requirements.txt` file.
 
 The code requires Python and JAX (only CPU suffices, optionally with GPU support). 
-
-## Project Structure
-
-```log
-.
-├── notebooks
-|   ├── getting-started.ipynb
-├── hdynamics
-│   ├── hdynamics.py
-│   └── odeint.py
-│   └── utils.py
-|   ├── dynamics
-|          ├── nbody.py
-|          ├── harmonic_oscillator.py
-```
 
 ## License
 

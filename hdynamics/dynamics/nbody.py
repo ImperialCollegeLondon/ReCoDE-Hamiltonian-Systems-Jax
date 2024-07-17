@@ -1,4 +1,4 @@
-"""Implementatino of N-body system."""
+"""Implementation of N-body system."""
 
 import jax.numpy as jnp
 import matplotlib
