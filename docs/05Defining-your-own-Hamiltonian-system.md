@@ -10,7 +10,7 @@ We start by creating a new file for our dynamical system `hdynamics/dynamics/[na
 
 #### Step 2. Inherit Dynamics class
 
-We then create a new class by inheriting from `hdynamics.dynamics.Dynamics` class:
+We then create a new class by inheriting from `hdynamics.dynamics.Dynamics` class. The template below shows the class structure, but without the complete method implementations:
 
 ```
 import jax.numpy as jnp

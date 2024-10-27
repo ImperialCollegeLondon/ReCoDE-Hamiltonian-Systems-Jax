@@ -54,7 +54,7 @@ class Dynamics(ABC):
 ```
 
 
-Importantly, we must always define a Hamiltonian (as this defines the dynamics) and can optionally define plotting functions. 
+Importantly, we must always define a Hamiltonian (as this defines the dynamics) and enforce this by marking it as abstract method with the ```@abstratcmethod``` decorator. The child classes can optionally define the functions ```plot_trajectory``` and ```plot_H```. These are not abstract methods, but may be overridden in child classes.
 
 | Function      | Description |
 | ----------- | ----------- |
