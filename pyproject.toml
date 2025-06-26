@@ -2,7 +2,7 @@
 exclude = ["htmlcov"] # Exclude the coverage report file from setuptools package finder
 
 [project]
-name = "hamiltonian_systems_jax"
+name = "hdynamics"
 version = "0.0.1"
 authors = [
     { name = "Tycho van der Ouderaa", email = "t.van-der-ouderaa21@imperial.ac.uk" },
@@ -10,7 +10,7 @@ authors = [
     { name = "Chris Cave-Ayland", email = "c.cave-ayland@imperial.ac.uk" },
 ]
 requires-python = ">=3.11"
-dependencies = ["jax[cpu]"]
+dependencies = ["jax[cpu]", "matplotlib"]
 
 [project.optional-dependencies]
 dev = [
@@ -27,7 +27,10 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "-v -p no:warnings --cov=hamiltonian_systems_jax --cov-report=html --doctest-modules"
+addopts = "-v -p no:warnings --cov=hdynamics --cov-report=html --doctest-modules"
+
+[tool.ruff]
+line-length = 120
 
 [tool.ruff.lint]
 select = ["D", "E", "F", "I"] # pydocstyle, pycodestyle, Pyflakes, isort

@@ -4,24 +4,46 @@
 #
 #    pip-compile pyproject.toml
 #
+contourpy==1.2.1
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
+fonttools==4.51.0
+    # via matplotlib
 jax[cpu]==0.4.25
     # via hamiltonian_systems_jax (pyproject.toml)
 jaxlib==0.4.25
     # via jax
+kiwisolver==1.4.5
+    # via matplotlib
+matplotlib==3.9.0
+    # via hamiltonian_systems_jax (pyproject.toml)
 ml-dtypes==0.3.2
     # via
     #   jax
     #   jaxlib
 numpy==1.26.4
     # via
+    #   contourpy
     #   jax
     #   jaxlib
+    #   matplotlib
     #   ml-dtypes
     #   opt-einsum
     #   scipy
 opt-einsum==3.3.0
     # via jax
+packaging==24.0
+    # via matplotlib
+pillow==10.3.0
+    # via matplotlib
+pyparsing==3.1.2
+    # via matplotlib
+python-dateutil==2.9.0.post0
+    # via matplotlib
 scipy==1.12.0
     # via
     #   jax
     #   jaxlib
+six==1.16.0
+    # via python-dateutil
