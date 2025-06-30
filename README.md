@@ -2,7 +2,7 @@
 
 # Hamiltonian systems in Jax
 
-In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and demonstrate how Python and JAX can be used to simulate and visualise systems. We go over the mathematical prerequisits and create a framework for solving Hamiltonian equations using the general dynamical systems solver in JAX. Finally, we demonstrate how we can implement simple harmonic oscillator and N-body systems, including visualiation code to plot various system simulated over time.
+In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and demonstrate how Python and JAX can be used to simulate and visualise systems. We go over the mathematical prerequisites and create a framework for solving Hamiltonian equations using the general dynamical systems solver in JAX. Finally, we demonstrate how we can implement simple harmonic oscillator and N-body systems, including visualisation code to plot various system simulated over time.
 
 ## Getting Started
 
@@ -27,9 +27,21 @@ Undergraduate level calculus, linear algebra and a basic understanding of physic
 
 ## System
 
-Package requiements can be found in the `requirements.txt` file.
-
 The code requires Python and JAX (only CPU suffices, optionally with GPU support). 
+
+If you are installing the code on a Windows machine, you will need to first install the Microsoft Visual C++ Build Tools. You can find the installer [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/). If prompted, select "Desktop development with C++" and install the required components.
+
+If you want to run the code in the project only, you can install the required packages from the `pyproject.toml` file using the following command:
+
+```bash
+pip install -e .
+```
+
+If you want to develop the code, you can install the required packages from the `pyproject.toml` file using the following command:
+
+```bash
+pip install -e .[dev]
+```
 
 ## License
 
