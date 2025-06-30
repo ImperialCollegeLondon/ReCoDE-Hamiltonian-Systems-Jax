@@ -1,5 +1,3 @@
-<!-- Your Project title, make it sound catchy! -->
-
 # Hamiltonian systems in Jax
 
 In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and demonstrate how Python and JAX can be used to simulate and visualise systems. We go over the mathematical prerequisites and create a framework for solving Hamiltonian equations using the general dynamical systems solver in JAX. Finally, we demonstrate how we can implement simple harmonic oscillator and N-body systems, including visualisation code to plot various system simulated over time.
