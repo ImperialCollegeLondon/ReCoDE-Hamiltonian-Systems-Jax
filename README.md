@@ -23,24 +23,6 @@ The main learning outcomes are to provide a:
 
 Undergraduate level calculus, linear algebra and a basic understanding of physics are required.
 
-## System
-
-The code requires Python and JAX (only CPU suffices, optionally with GPU support). 
-
-If you are installing the code on a Windows machine, you will need to first install the Microsoft Visual C++ Build Tools. You can find the installer [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/). If prompted, select "Desktop development with C++" and install the required components.
-
-If you want to run the code in the project only, you can install the required packages from the `pyproject.toml` file using the following command:
-
-```bash
-pip install -e .
-```
-
-If you want to develop the code, you can install the required packages from the `pyproject.toml` file using the following command:
-
-```bash
-pip install -e .[dev]
-```
-
 ## License
 
 This project is licensed under the [BSD-3-Clause license](LICENSE.md)
