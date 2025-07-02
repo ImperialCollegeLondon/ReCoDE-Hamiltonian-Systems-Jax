@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: 3.x
       - name: Install dependencies
-        run: pip install -r dev-requirements.txt
+        run: pip install -e .[dev]
       - name: Copy notebooks into docs
         run: cp -r notebooks/* docs/ | echo "No notebooks found"
       - name: Deploy Mkdocs
