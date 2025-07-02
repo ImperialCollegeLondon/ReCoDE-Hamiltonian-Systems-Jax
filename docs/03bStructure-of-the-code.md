@@ -23,7 +23,7 @@ with a brief description of different components summarized in the table below,
 | odeint.py | Code for integrating ordinary differential equations. |
 | utils.py    | Utility functions. |
 | data.py | Functions to generate trajectory data. |
-| dynamics/  | Folder containing implemented dynamcial systems. |
+| dynamics/  | Folder containing implemented dynamical systems. |
 
 We will discuss the individual components in the sections to come.
 
