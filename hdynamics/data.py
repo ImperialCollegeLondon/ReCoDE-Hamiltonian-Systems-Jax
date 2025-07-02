@@ -96,6 +96,6 @@ def generate_trajectory(grad_x, x_start, stepsize, n_steps=500):
 
     t_span = jnp.linspace(t_start, t_end, n_steps + 1)
 
-    solution = ode_int(grad_x, x_start, t_span, atol=1e-10, rtol=1e-10)  # (T, M)
+    solution = ode_int(grad_x, x_start, t_span, atol=1e-10, rtol=1e-10)
 
     return solution, t_span
