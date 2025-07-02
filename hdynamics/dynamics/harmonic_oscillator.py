@@ -97,7 +97,7 @@ class HarmonicOscillator(Dynamics):
         B, T, pdim = trajectories.shape
 
         if pdim != 2:
-            raise NotImplementedError("Can onnly plot phase trajectories for 2-dimensional phase spaces")
+            raise NotImplementedError("Can only plot phase trajectories for 2-dimensional phase spaces")
 
         for trajectory in trajectories:
             # color
