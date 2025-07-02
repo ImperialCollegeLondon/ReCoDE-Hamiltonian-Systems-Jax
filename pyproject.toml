@@ -24,6 +24,7 @@ dev = [
     "mkdocs-material",
     "mkdocs-jupyter",
     "python-markdown-math",
+    "tqdm",
 ]
 
 [tool.pytest.ini_options]
