@@ -113,7 +113,5 @@ class Nbody(Dynamics):
 
         ax.set_xlim(x_lim_min, x_lim_max)
         ax.set_ylim(y_lim_min, y_lim_max)
-        ax.set_xticks([])
-        ax.set_yticks([])
-
-        ax.set_aspect("equal")
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
