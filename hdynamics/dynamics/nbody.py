@@ -1,6 +1,7 @@
 """Implementation of N-body system."""
 
 import jax.numpy as jnp
+import matplotlib.pyplot as plt
 
 from hdynamics.hdynamics import Dynamics
 
@@ -59,15 +60,8 @@ class Nbody(Dynamics):
         if self.dim != 2:
             raise NotImplementedError("N-body system plotting currently only supported for 2d systems")
 
-        colors = [
-            "tab:blue",
-            "tab:red",
-            "tab:orange",
-            "tab:purple",
-            "tab:green",
-            "tab:brown",
-            "tab:pink",
-        ]
+        # Get the default colour cycle from matplotlib
+        colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
         for object_i in range(self.n_bodies):
             # color
