@@ -51,8 +51,6 @@ class Nbody(Dynamics):
         trajectory,
         t_span,
         ax,
-        xlim=3,
-        ylim=3,
     ):
         """Plot 2d trajectory.
 
@@ -92,8 +90,30 @@ class Nbody(Dynamics):
                 color=color,
             )
 
-        ax.set_xlim(-xlim, xlim)
-        ax.set_ylim(-ylim, ylim)
+        x_min = jnp.min(trajectory[:, : self.n_bodies * 2 : 2])
+        x_max = jnp.max(trajectory[:, : self.n_bodies * 2 : 2])
+        y_min = jnp.min(trajectory[:, 1 : self.n_bodies * 2 : 2])
+        y_max = jnp.max(trajectory[:, 1 : self.n_bodies * 2 : 2])
+
+        x_range = x_max - x_min
+        y_range = y_max - y_min
+
+        if x_range == 0:
+            x_lim_min = x_min - 1
+            x_lim_max = x_min + 1
+        else:
+            x_lim_min = x_min - x_range * 0.1
+            x_lim_max = x_max + x_range * 0.1
+
+        if y_range == 0:
+            y_lim_min = y_min - 1
+            y_lim_max = y_min + 1
+        else:
+            y_lim_min = y_min - y_range * 0.1
+            y_lim_max = y_max + y_range * 0.1
+
+        ax.set_xlim(x_lim_min, x_lim_max)
+        ax.set_ylim(y_lim_min, y_lim_max)
         ax.set_xticks([])
         ax.set_yticks([])
 
