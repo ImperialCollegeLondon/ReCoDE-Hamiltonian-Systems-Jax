@@ -76,7 +76,7 @@ class Nbody(Dynamics):
             points_x, points_y = trajectory[:, object_i * 2], trajectory[:, object_i * 2 + 1]
 
             # draw line
-            ax.plot(points_x, points_y, "-", linewidth=1, color=color)
+            ax.plot(points_x, points_y, "-", linewidth=1, color=color, label=f"Object {object_i + 1}")
 
             ax.plot()
 
@@ -115,3 +115,5 @@ class Nbody(Dynamics):
         ax.set_ylim(y_lim_min, y_lim_max)
         ax.set_xlabel("x")
         ax.set_ylabel("y")
+
+        ax.legend()
