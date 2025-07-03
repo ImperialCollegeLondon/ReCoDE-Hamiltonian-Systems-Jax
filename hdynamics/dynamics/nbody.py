@@ -49,7 +49,6 @@ class Nbody(Dynamics):
     def plot_trajectory(
         self,
         trajectory,
-        t_span,
         ax,
     ):
         """Plot 2d trajectory.
