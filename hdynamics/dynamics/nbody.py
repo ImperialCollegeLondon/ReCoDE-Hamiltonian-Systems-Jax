@@ -1,7 +1,6 @@
 """Implementation of N-body system."""
 
 import jax.numpy as jnp
-import matplotlib
 
 from hdynamics.hdynamics import Dynamics
 
@@ -54,8 +53,6 @@ class Nbody(Dynamics):
         ax,
         xlim=3,
         ylim=3,
-        alpha=1.0,
-        transparent=False,
     ):
         """Plot 2d trajectory.
 
@@ -78,8 +75,6 @@ class Nbody(Dynamics):
             "tab:brown",
             "tab:pink",
         ]
-        if transparent:
-            colors = [tuple([x + (1 - x) * 0.6 for x in matplotlib.colors.to_rgb(color)]) for color in colors]
 
         for object_i in range(self.n_bodies):
             # color
@@ -89,22 +84,19 @@ class Nbody(Dynamics):
 
             points_x, points_y = points[:, 0], points[:, 1]
 
-            if transparent:
-                # draw dots
-                ax.plot(points_x, points_y, "-", linewidth=1, color=color, alpha=alpha)
-            else:
-                # draw line
-                ax.plot(points_x, points_y, "-", linewidth=1, color=color, alpha=alpha)
+            # draw line
+            ax.plot(points_x, points_y, "-", linewidth=1, color=color)
 
-                # draw line
-                ax.plot(
-                    points_x[-1:],
-                    points_y[-1:],
-                    ".",
-                    markersize=8,
-                    color=color,
-                    alpha=alpha,
-                )
+            ax.plot()
+
+            # draw line
+            ax.plot(
+                points_x[-1:],
+                points_y[-1:],
+                ".",
+                markersize=8,
+                color=color,
+            )
 
         ax.set_xlim(-xlim, xlim)
         ax.set_ylim(-ylim, ylim)
