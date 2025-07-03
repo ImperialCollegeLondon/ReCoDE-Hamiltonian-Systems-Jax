@@ -62,10 +62,6 @@ class Nbody(Dynamics):
         if self.dim != 2:
             raise NotImplementedError("N-body system plotting currently only supported for 2d systems")
 
-        T = trajectory.shape[0]  # time
-
-        trajectory = trajectory.reshape(T, 2, self.n_bodies, self.dim)
-
         colors = [
             "tab:blue",
             "tab:red",
@@ -80,9 +76,7 @@ class Nbody(Dynamics):
             # color
             color = colors[object_i % len(colors)]
 
-            points = trajectory.reshape(T, 2, self.n_bodies, self.dim)[:, 0, object_i]
-
-            points_x, points_y = points[:, 0], points[:, 1]
+            points_x, points_y = trajectory[:, object_i * 2], trajectory[:, object_i * 2 + 1]
 
             # draw line
             ax.plot(points_x, points_y, "-", linewidth=1, color=color)
