@@ -31,9 +31,6 @@ class HarmonicOscillator(Dynamics):
         trajectory,
         t_span,
         ax,
-        ylim=3,
-        alpha=1.0,
-        transparent=False,
     ):
         """Plot 2d trajectory.
 
@@ -51,18 +48,26 @@ class HarmonicOscillator(Dynamics):
 
         points = trajectory.reshape(T, 2)[:, 0]
 
-        if transparent:
-            # draw brighter
-            ax.plot(time, points, "-", s=10, linewidth=2, color=color, alpha=alpha)
-        else:
-            # draw line
-            ax.plot(time, points, "-", linewidth=2, markersize=5, color=color, alpha=alpha)
+        # draw line
+        ax.plot(time, points, "-", linewidth=2, markersize=5, color=color)
 
-            # draw ball
-            ax.plot([time[-1]], [points[-1]], ".", markersize=6, color=color, alpha=alpha)
+        # draw ball
+        ax.plot([time[-1]], [points[-1]], ".", markersize=6, color=color)
+
+        y_min = jnp.min(points)
+        y_max = jnp.max(points)
+
+        y_range = y_max - y_min
+
+        if y_range == 0:
+            y_lim_min = y_min - 1.0
+            y_lim_max = y_min + 1.0
+        else:
+            y_lim_min = y_min - 0.1 * y_range
+            y_lim_max = y_max + 0.1 * y_range
 
         ax.set_xlim(0, t_span[-1] * 1.1)
-        ax.set_ylim(-ylim, ylim)
+        ax.set_ylim(y_lim_min, y_lim_max)
 
     def plot_phase_energy(self, grid_energy, ax, lim=1.0):
         """Plot energy on phase space.
