@@ -43,85 +43,36 @@ class HarmonicOscillator(Dynamics):
         # Draw point at end of line
         ax.scatter([t_span[-1]], [trajectory[-1, 0]], s=20, marker="o")
 
-    def plot_phase_energy(self, grid_energy, ax, lim=1.0):
-        """Plot energy on phase space.
-
-        Input:
-            energy grid: (H, W)
-        """
-        H, W = grid_energy.shape
-        y = jnp.linspace(-lim, lim, H)
-        x = jnp.linspace(-lim, lim, W)
-        xx, yy = jnp.meshgrid(x, y)
-        ax.contour(xx, yy, grid_energy)
-
-        ax.set_xticks([-lim, 0, lim])
-        ax.set_yticks([-lim, 0, lim])
-
-        ax.set_aspect("equal")
-
-    def plot_phase_trajectories(
+    def plot_phase_energy(
         self,
-        trajectories,
         ax,
-        lim=3,
-        alpha=1.0,
-        transparent=False,
+        q_min=-1.0,
+        q_max=1.0,
+        p_min=-1.0,
+        p_max=1.0,
+        num_points=100,
+        **contour_kwargs,
     ):
-        """Plot 2d trajectory.
+        """Plot energy contours in phase space (q, p).
 
-        Input:
-            trajectories: (B, T, pdim)
+        Args:
+            ax (matplotlib.axes.Axes): Matplotlib Axes object to plot on.
+            q_min (float): Minimum value for position axis.
+            q_max (float): Maximum value for position axis.
+            p_min (float): Minimum value for momentum axis.
+            p_max (float): Maximum value for momentum axis.
+            num_points (int): Number of grid points per axis.
+            **contour_kwargs: Additional keyword arguments for ax.contour.
+
+        The Hamiltonian is evaluated at each (q, p) grid point.
         """
-        B, T, pdim = trajectories.shape
+        q = jnp.linspace(q_min, q_max, num_points)
+        p = jnp.linspace(p_min, p_max, num_points)
+        Q, P = jnp.meshgrid(q, p)
+        # Evaluate H at each (q, p) pair
+        H_grid = jnp.vectorize(lambda q, p: self.H(jnp.array([q, p])))(Q, P)
 
-        if pdim != 2:
-            raise NotImplementedError("Can only plot phase trajectories for 2-dimensional phase spaces")
-
-        for trajectory in trajectories:
-            # color
-            color = "black"
-
-            q_points = trajectory.reshape(T, 2)[:, 0]
-            p_points = trajectory.reshape(T, 2)[:, 1]
-
-            if transparent:
-                # draw dots
-                for t_i in range(T):
-                    ax.scatter(
-                        [q_points[t_i]],
-                        [p_points[t_i]],
-                        s=3,
-                        markersize=10,
-                        marker=".",
-                        color=color,
-                        alpha=alpha,
-                    )
-            else:
-                # draw line
-                ax.plot(
-                    q_points,
-                    p_points,
-                    ".-",
-                    markersize=10,
-                    color=color,
-                    alpha=0.5 * alpha,
-                )
-
-                # draw ball
-                ax.plot(
-                    [q_points[-1]],
-                    [p_points[-1]],
-                    ">",
-                    markersize=5,
-                    color=color,
-                    alpha=alpha,
-                )
-
-        ax.set_xlim(-lim, lim)
-        ax.set_ylim(-lim, lim)
-
+        contour = ax.contour(Q, P, H_grid, **contour_kwargs)
         ax.set_xlabel("q")
         ax.set_ylabel("p")
-
-        ax.set_aspect("equal")
+        return contour
