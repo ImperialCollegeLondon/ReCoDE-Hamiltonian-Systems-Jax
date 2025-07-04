@@ -81,22 +81,32 @@ class Nbody(Dynamics):
         trajectory,
         ax,
     ):
-        """Plot 2d trajectory.
+        """Plot the 2D trajectories of all bodies in the system.
 
-        Input:
-            trajectory: (T, 2, n_bodies, dim), where T denotes time.
+        Args:
+            trajectory (array): Array of shape (T, 2 * n_bodies), where T is the number of time steps.
+                Each row contains the flattened x and y positions of all bodies at a given time.
+            ax (matplotlib.axes.Axes): Matplotlib Axes object to plot on.
+
+        Raises:
+            NotImplementedError: If the system dimension is not 2.
         """
+        # Give an error message if the system is not 2D
         if self.dim != 2:
             raise NotImplementedError("N-body system plotting currently only supported for 2d systems")
 
         # Get the default colour cycle from matplotlib
         colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
+        # Iterate over each body and plot its trajectory
         for object_i in range(self.n_bodies):
-            # color
+            # Select a color for the current object
+            # Use modulo to cycle through colors if there are more objects than colors
             color = colors[object_i % len(colors)]
 
-            points_x, points_y = trajectory[:, object_i * 2], trajectory[:, object_i * 2 + 1]
+            # Extract x and y coordinates for the current object
+            points_x = (trajectory[:, object_i * 2],)
+            points_y = trajectory[:, object_i * 2 + 1]
 
             # Draw line
             ax.plot(points_x, points_y, "-", linewidth=1, color=color, label=f"Object {object_i + 1}")
@@ -104,14 +114,18 @@ class Nbody(Dynamics):
             # Draw points at end of line
             ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=color)
 
+        # Find the minimum and maximum x and y coordinates across all bodies
         x_min = jnp.min(trajectory[:, : self.n_bodies * 2 : 2])
         x_max = jnp.max(trajectory[:, : self.n_bodies * 2 : 2])
         y_min = jnp.min(trajectory[:, 1 : self.n_bodies * 2 : 2])
         y_max = jnp.max(trajectory[:, 1 : self.n_bodies * 2 : 2])
 
+        # Calculate the range of x and y coordinates
         x_range = x_max - x_min
         y_range = y_max - y_min
 
+        # Set limits for x and y axes with a 10% margin
+        # If the range is zero, set limits to a small range around the min value
         if x_range == 0:
             x_lim_min = x_min - 1
             x_lim_max = x_min + 1
@@ -126,9 +140,11 @@ class Nbody(Dynamics):
             y_lim_min = y_min - y_range * 0.1
             y_lim_max = y_max + y_range * 0.1
 
+        # Set the limits for the axes
         ax.set_xlim(x_lim_min, x_lim_max)
         ax.set_ylim(y_lim_min, y_lim_max)
+
+        # Set labels and legend
         ax.set_xlabel("x")
         ax.set_ylabel("y")
-
         ax.legend()
