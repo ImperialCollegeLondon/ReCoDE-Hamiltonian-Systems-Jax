@@ -8,20 +8,32 @@ from jax.experimental.ode import odeint
 
 
 class Dynamics(ABC):
-    """Abstract class for a dynamical system."""
+    """Abstract base class for a Hamiltonian dynamical system.
+
+    Attributes:
+        cdim (int): Dimensionality of q and p (configuration and momentum space).
+        pdim (int): Dimensionality of the phase space (2 * cdim).
+    """
 
     def __init__(self, cdim):
-        """Initialisation of dynamical system.
+        """Initialise the dynamical system.
 
-        cdim is the dimensionality of q and p,
-        pdim=2*cdim is the dimensionality of the phase space.
+        Args:
+            cdim (int): Dimensionality of q and p (configuration and momentum space).
         """
         self.cdim = cdim
         self.pdim = cdim * 2
 
     @abstractmethod
     def H(self, x):
-        """Return scalar energy given phase space location x of shape (pdim,)."""
+        """Return the Hamiltonian (energy) at phase space location x.
+
+        Args:
+            x (array-like): Phase space vector of shape (pdim,).
+
+        Returns:
+            float: Scalar energy value at x.
+        """
         pass
 
     def jac_h(self):
@@ -34,13 +46,16 @@ class Dynamics(ABC):
 
     @staticmethod
     def symplectic_form(x):
-        """Return the canonical symplectic form for a vector x = [q, p].
+        """Return the canonical symplectic form for a phase space vector x = [q, p].
 
         Args:
             x (array-like): Phase space vector of shape (2*D,).
 
         Returns:
-            array: Symplectic form vector of shape (2*D,).
+            jax.numpy.ndarray: Symplectic form vector of shape (2*D,).
+
+        Raises:
+            ValueError: If x is not a 1D array or does not have even length.
         """
         if len(x.shape) != 1:
             raise ValueError(f"symplectic form expects a vector of shape (M,). Got: {x.shape}.")
@@ -51,7 +66,11 @@ class Dynamics(ABC):
         return jnp.concatenate([p, -q])
 
     def get_rate_of_change(self):
-        """Return a function grad_x(x, t) suitable for ODE integration."""
+        """Return a function grad_x(x, t) suitable for ODE integration.
+
+        Returns:
+            Callable: A function grad_x(x, t) that returns the time derivative of x.
+        """
         jac_h = self.jac_h()
 
         def grad_x(x, t):
