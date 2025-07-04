@@ -36,7 +36,7 @@ class Nbody(Dynamics):
 
         q, p = x.reshape(2, self.n_bodies, self.dim)
 
-        H_kinetic = jnp.sum((jnp.linalg.norm(p, axis=1) ** 2) / (2 * (self.masses**2)))
+        H_kinetic = jnp.sum(jnp.sum(p**2, axis=1) / (2 * self.masses))
 
         q_dists = q.reshape(self.n_bodies, 1, self.dim) - q.reshape(
             1, self.n_bodies, self.dim
