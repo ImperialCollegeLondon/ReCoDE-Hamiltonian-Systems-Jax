@@ -31,14 +31,14 @@ class Nbody(Dynamics):
 
         # Ensure masses is an array of shape (n_bodies,)
         if isinstance(masses, (int, float)):
-            self.masses = jnp.array([masses for _ in range(self.n_bodies)])
+            self.masses = jnp.full(self.n_bodies, masses)
         else:
             self.masses = masses
 
         # Precompute the outer product of masses for pairwise interactions
         self.masses_outer = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
 
-    def H(self, x, eps=1.0):
+    def H(self, x, eps=0.1):
         """Hamiltonian (total energy) of the N-body system.
 
         Args:
@@ -49,7 +49,8 @@ class Nbody(Dynamics):
         Returns:
             float: The total energy (kinetic + potential) of the system.
         """
-        assert len(x) == self.pdim, f"x does not have correct shape of {self.pdim}. Got x of shape {x.shape}."
+        if len(x) != self.pdim:
+            raise ValueError(f"x must have length {self.pdim}. Got shape {x.shape} and value {x}")
 
         # Unpack phase space vector into positions and momenta
         positions, momenta = x.reshape(2, self.n_bodies, self.dim)
