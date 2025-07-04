@@ -31,7 +31,8 @@ class HarmonicOscillator(Dynamics):
         Returns:
             float: The total energy of the system at state x.
         """
-        assert x.shape[0] == 2, f"x does have have correct shape: {x}"
+        if x.shape[0] != 2:
+            raise ValueError(f"x must have shape (2,), got shape {x.shape} and value {x}")
 
         q, p = x
 
