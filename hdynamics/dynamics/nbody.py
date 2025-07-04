@@ -24,6 +24,8 @@ class Nbody(Dynamics):
         else:
             self.masses = masses
 
+        self.masses_outer = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
+
     def H(self, x, eps=1.0):
         """Hamiltonian of Nbody system.
 
@@ -40,8 +42,8 @@ class Nbody(Dynamics):
             1, self.n_bodies, self.dim
         )  # (n_bodies, n_bodies, dim)
         q_quads = jnp.sum(q_dists**2, axis=2)  # (n_bodies, n_bodies)
-        masses_outer = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
-        H_potential = -jnp.sum(jnp.tril(masses_outer / jnp.sqrt(q_quads + (eps**2)), -1))
+
+        H_potential = -jnp.sum(jnp.tril(self.masses_outer / jnp.sqrt(q_quads + (eps**2)), -1))
 
         H = H_kinetic + H_potential
 
