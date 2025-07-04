@@ -48,11 +48,11 @@ class HarmonicOscillator(Dynamics):
 
         points = trajectory.reshape(T, 2)[:, 0]
 
-        # draw line
+        # Draw line
         ax.plot(time, points, "-", linewidth=2, markersize=5, color=color)
 
-        # draw ball
-        ax.plot([time[-1]], [points[-1]], ".", markersize=6, color=color)
+        # Draw point at end of line
+        ax.scatter([time[-1]], [points[-1]], s=20, marker="o", color=color)
 
         y_min = jnp.min(points)
         y_max = jnp.max(points)
