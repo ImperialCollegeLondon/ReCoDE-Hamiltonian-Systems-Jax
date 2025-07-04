@@ -4,8 +4,7 @@ from abc import ABC, abstractmethod
 
 import jax
 import jax.numpy as jnp
-
-from hdynamics.utils import symplectic_form
+from jax.experimental.ode import odeint
 
 
 class Dynamics(ABC):
@@ -25,26 +24,38 @@ class Dynamics(ABC):
         """Return scalar energy given phase space location x of shape (pdim,)."""
         pass
 
-    def initial_phase(self, key, q_scale=1.0, p_scale=1.0, q_trans=0.0, p_trans=0.0):
-        """Return initial location of shape (2, cdim)."""
-        x_start = jax.random.normal(key, shape=(2, self.cdim))
-
-        qp_scale = jnp.array([q_scale, p_scale]).reshape(2, 1)
-        qp_trans = jnp.array([q_trans, p_trans]).reshape(2, 1)
-        x_start = x_start * qp_scale + qp_trans
-
-        return x_start
-
     def jac_h(self):
-        """Return the gradient of the Hamiltonian with respect to x."""
+        """Return a function that computes the gradient of the Hamiltonian with respect to x.
+
+        Returns:
+            Callable: A function grad(x) that returns the gradient of H at x.
+        """
         return jax.grad(self.H)
+
+    @staticmethod
+    def symplectic_form(x):
+        """Return the canonical symplectic form for a vector x = [q, p].
+
+        Args:
+            x (array-like): Phase space vector of shape (2*D,).
+
+        Returns:
+            array: Symplectic form vector of shape (2*D,).
+        """
+        if len(x.shape) != 1:
+            raise ValueError(f"symplectic form expects a vector of shape (M,). Got: {x.shape}.")
+        if (len(x) % 2) != 0:
+            raise ValueError(f"input shape should be even. Got {x.shape}.")
+        D = x.shape[0] // 2
+        q, p = x[:D], x[D:]
+        return jnp.concatenate([p, -q])
 
     def get_rate_of_change(self):
         """Return a function grad_x(x, t) suitable for ODE integration."""
         jac_h = self.jac_h()
 
         def grad_x(x, t):
-            return symplectic_form(jac_h(x))
+            return self.symplectic_form(jac_h(x))
 
         return grad_x
 
@@ -69,7 +80,7 @@ class Dynamics(ABC):
 
         grad_x = self.get_rate_of_change()
 
-        solution = jax.experimental.ode.odeint(grad_x, initial_conditions, t_span, rtol=rtol, atol=atol)
+        solution = odeint(grad_x, initial_conditions, t_span, rtol=rtol, atol=atol)
 
         return solution, t_span
 
