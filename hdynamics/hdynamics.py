@@ -5,7 +5,6 @@ from abc import ABC, abstractmethod
 import jax
 import jax.numpy as jnp
 
-from hdynamics.odeint import ode_int
 from hdynamics.utils import symplectic_form
 
 
@@ -49,17 +48,19 @@ class Dynamics(ABC):
 
         return grad_x
 
-    def generate_trajectory(self, x_start, stepsize, n_steps=500):
-        """Simulate a single trajectory using the provided gradient function and initial state.
+    def generate_trajectory(self, initial_conditions, stepsize, n_steps=500, rtol=1e-5, atol=1e-5):
+        """Simulate a single trajectory using the system's ODE and initial state.
 
         Args:
-            x_start (array-like): Initial state vector.
+            initial_conditions (array-like): Initial state vector of shape (M,), where M is the phase space dimension.
             stepsize (float): Step size for integration.
-            n_steps (int, optional): Number of time steps.
+            n_steps (int, optional): Number of time steps (default: 500).
+            rtol (float, optional): Relative tolerance for the ODE solver (default: 1e-5).
+            atol (float, optional): Absolute tolerance for the ODE solver (default: 1e-5).
 
         Returns:
             solution (jax.numpy.ndarray): Simulated trajectory of shape (n_steps+1, M).
-            t_span (jax.numpy.ndarray): Time points for the simulation.
+            t_span (jax.numpy.ndarray): Array of time points of shape (n_steps+1,).
         """
         t_start = 0.0
         t_end = n_steps * stepsize
@@ -68,7 +69,7 @@ class Dynamics(ABC):
 
         grad_x = self.get_rate_of_change()
 
-        solution = ode_int(grad_x, x_start, t_span, atol=1e-10, rtol=1e-10)
+        solution = jax.experimental.ode.odeint(grad_x, initial_conditions, t_span, rtol=rtol, atol=atol)
 
         return solution, t_span
 
