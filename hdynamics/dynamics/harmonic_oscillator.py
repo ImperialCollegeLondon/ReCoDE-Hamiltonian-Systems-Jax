@@ -46,7 +46,7 @@ class HarmonicOscillator(Dynamics):
         points = trajectory.reshape(T, 2)[:, 0]
 
         # Draw line
-        ax.plot(time, points, "-", linewidth=2, markersize=5)
+        ax.plot(time, points)
 
         # Draw point at end of line
         ax.scatter([time[-1]], [points[-1]], s=20, marker="o")
