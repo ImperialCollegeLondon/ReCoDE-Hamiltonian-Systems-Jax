@@ -43,21 +43,6 @@ class HarmonicOscillator(Dynamics):
         # Draw point at end of line
         ax.scatter([t_span[-1]], [trajectory[-1, 0]], s=20, marker="o")
 
-        y_min = jnp.min(trajectory[:, 0])
-        y_max = jnp.max(trajectory[:, 0])
-
-        y_range = y_max - y_min
-
-        if y_range == 0:
-            y_lim_min = y_min - 1.0
-            y_lim_max = y_min + 1.0
-        else:
-            y_lim_min = y_min - 0.1 * y_range
-            y_lim_max = y_max + 0.1 * y_range
-
-        ax.set_xlim(0, t_span[-1] * 1.1)
-        ax.set_ylim(y_lim_min, y_lim_max)
-
     def plot_phase_energy(self, grid_energy, ax, lim=1.0):
         """Plot energy on phase space.
 

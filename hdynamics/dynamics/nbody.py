@@ -117,36 +117,6 @@ class Nbody(Dynamics):
             # Draw points at end of line
             ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=color)
 
-        # Find the minimum and maximum x and y coordinates across all bodies
-        x_min = jnp.min(trajectory[:, : self.n_bodies * 2 : 2])
-        x_max = jnp.max(trajectory[:, : self.n_bodies * 2 : 2])
-        y_min = jnp.min(trajectory[:, 1 : self.n_bodies * 2 : 2])
-        y_max = jnp.max(trajectory[:, 1 : self.n_bodies * 2 : 2])
-
-        # Calculate the range of x and y coordinates
-        x_range = x_max - x_min
-        y_range = y_max - y_min
-
-        # Set limits for x and y axes with a 10% margin
-        # If the range is zero, set limits to a small range around the min value
-        if x_range == 0:
-            x_lim_min = x_min - 1
-            x_lim_max = x_min + 1
-        else:
-            x_lim_min = x_min - x_range * 0.1
-            x_lim_max = x_max + x_range * 0.1
-
-        if y_range == 0:
-            y_lim_min = y_min - 1
-            y_lim_max = y_min + 1
-        else:
-            y_lim_min = y_min - y_range * 0.1
-            y_lim_max = y_max + y_range * 0.1
-
-        # Set the limits for the axes
-        ax.set_xlim(x_lim_min, x_lim_max)
-        ax.set_ylim(y_lim_min, y_lim_max)
-
         # Set labels and legend
         ax.set_xlabel("x")
         ax.set_ylabel("y")
