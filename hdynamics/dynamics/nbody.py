@@ -79,6 +79,7 @@ class Nbody(Dynamics):
     def plot_trajectory(
         self,
         trajectory,
+        t_span,
         ax,
     ):
         """Plot the 2D trajectories of all bodies in the system.
@@ -86,6 +87,8 @@ class Nbody(Dynamics):
         Args:
             trajectory (array): Array of shape (T, 2 * n_bodies), where T is the number of time steps.
                 Each row contains the flattened x and y positions of all bodies at a given time.
+            t_span (array): Array of time steps corresponding to the trajectory. Not used in this method,
+                but included for interface consistency with related classes.
             ax (matplotlib.axes.Axes): Matplotlib Axes object to plot on.
 
         Raises:
