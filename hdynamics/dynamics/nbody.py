@@ -18,7 +18,11 @@ class Nbody(Dynamics):
         self.n_bodies = n_bodies
 
         self.gravity = gravity
-        self.masses = masses
+
+        if isinstance(masses, (int, float)):
+            self.masses = jnp.array([masses for _ in range(self.n_bodies)])
+        else:
+            self.masses = masses
 
     def H(self, x, eps=1.0):
         """Hamiltonian of Nbody system.
@@ -28,19 +32,15 @@ class Nbody(Dynamics):
         """
         assert len(x) == self.pdim, f"x does not have correct shape of {self.pdim}. Got x of shape {x.shape}."
 
-        masses = (
-            jnp.array([self.masses for _ in range(self.n_bodies)]) if isinstance(self.masses, float) else self.masses
-        )
-
         q, p = x.reshape(2, self.n_bodies, self.dim)
 
-        H_kinetic = jnp.sum((jnp.linalg.norm(p, axis=1) ** 2) / (2 * (masses**2)))
+        H_kinetic = jnp.sum((jnp.linalg.norm(p, axis=1) ** 2) / (2 * (self.masses**2)))
 
         q_dists = q.reshape(self.n_bodies, 1, self.dim) - q.reshape(
             1, self.n_bodies, self.dim
         )  # (n_bodies, n_bodies, dim)
         q_quads = jnp.sum(q_dists**2, axis=2)  # (n_bodies, n_bodies)
-        masses_outer = jnp.outer(masses, masses)  # (n_bodies, n_bodies)
+        masses_outer = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
         H_potential = -jnp.sum(jnp.tril(masses_outer / jnp.sqrt(q_quads + (eps**2)), -1))
 
         H = H_kinetic + H_potential
