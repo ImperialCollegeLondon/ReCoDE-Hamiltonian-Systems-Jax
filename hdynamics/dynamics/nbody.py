@@ -112,7 +112,7 @@ class Nbody(Dynamics):
             points_y = trajectory[:, object_i * 2 + 1]
 
             # Draw line
-            ax.plot(points_x, points_y, "-", linewidth=1, color=color, label=f"Object {object_i + 1}")
+            ax.plot(points_x, points_y, linewidth=1, color=color, label=f"Object {object_i + 1}")
 
             # Draw points at end of line
             ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=color)
