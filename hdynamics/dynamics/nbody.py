@@ -108,7 +108,7 @@ class Nbody(Dynamics):
             color = colors[object_i % len(colors)]
 
             # Extract x and y coordinates for the current object
-            points_x = (trajectory[:, object_i * 2],)
+            points_x = trajectory[:, object_i * 2]
             points_y = trajectory[:, object_i * 2 + 1]
 
             # Draw line
