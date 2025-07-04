@@ -69,19 +69,11 @@ class Nbody(Dynamics):
 
             points_x, points_y = trajectory[:, object_i * 2], trajectory[:, object_i * 2 + 1]
 
-            # draw line
+            # Draw line
             ax.plot(points_x, points_y, "-", linewidth=1, color=color, label=f"Object {object_i + 1}")
 
-            ax.plot()
-
-            # draw line
-            ax.plot(
-                points_x[-1:],
-                points_y[-1:],
-                ".",
-                markersize=8,
-                color=color,
-            )
+            # Draw points at end of line
+            ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=color)
 
         x_min = jnp.min(trajectory[:, : self.n_bodies * 2 : 2])
         x_max = jnp.max(trajectory[:, : self.n_bodies * 2 : 2])
