@@ -7,22 +7,25 @@ class HarmonicOscillator(Dynamics):
     """Dynamics of a one-dimensional simple harmonic oscillator.
 
     Models a system with Hamiltonian
-        H(q, p) = 0.5 * q^2 + 0.5 * omega^2 * p^2,
+        H(q, p) = p^2/(2m) + 0.5 * k * q^2,
     where q is position and p is momentum.
 
     Attributes:
-        omega (float): Angular frequency of the oscillator.
+        m (float): Mass of the oscillator.
+        k (float): Spring constant.
     """
 
-    def __init__(self, omega=1.0):
+    def __init__(self, m=1.0, k=1.0):
         """Initialise the harmonic oscillator.
 
         Args:
-            omega (float): Angular frequency of the oscillator.
+            m (float): Mass of the oscillator.
+            k (float): Spring constant.
         """
         cdim = 1
         super().__init__(cdim)
-        self.omega = omega
+        self.m = m
+        self.k = k
 
     def H(self, x, eps=1.0):
         """Compute the Hamiltonian (total energy) for a given state.
@@ -41,8 +44,8 @@ class HarmonicOscillator(Dynamics):
             raise ValueError(f"x must have shape (2,), got shape {x.shape} and value {x}")
 
         q, p = x
-        pot_energy = 0.5 * (q**2)
-        kin_energy = 0.5 * (p**2) * (self.omega**2)
+        pot_energy = 0.5 * self.k * (q**2)
+        kin_energy = (p**2) / (2 * self.m)
         return pot_energy + kin_energy
 
     def plot_trajectory(
