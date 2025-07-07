@@ -22,8 +22,7 @@ class HarmonicOscillator(Dynamics):
             m (float): Mass of the oscillator.
             k (float): Spring constant.
         """
-        cdim = 1
-        super().__init__(cdim)
+        super().__init__(cdim=1)
         self.m = m
         self.k = k
 
