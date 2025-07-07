@@ -6,8 +6,12 @@ from hdynamics.hdynamics import Dynamics
 class HarmonicOscillator(Dynamics):
     """Dynamics of a one-dimensional simple harmonic oscillator.
 
-    Models a system with Hamiltonian H(q, p) = 0.5 * q^2 + 0.5 * omega^2 * p^2,
+    Models a system with Hamiltonian
+        H(q, p) = 0.5 * q^2 + 0.5 * omega^2 * p^2,
     where q is position and p is momentum.
+
+    Attributes:
+        omega (float): Angular frequency of the oscillator.
     """
 
     def __init__(self, omega=1.0):
@@ -18,7 +22,6 @@ class HarmonicOscillator(Dynamics):
         """
         cdim = 1
         super().__init__(cdim)
-
         self.omega = omega
 
     def H(self, x, eps=1.0):
@@ -30,15 +33,16 @@ class HarmonicOscillator(Dynamics):
 
         Returns:
             float: The total energy of the system at state x.
+
+        Raises:
+            ValueError: If x does not have shape (2,).
         """
         if x.shape[0] != 2:
             raise ValueError(f"x must have shape (2,), got shape {x.shape} and value {x}")
 
         q, p = x
-
         pot_energy = 0.5 * (q**2)
         kin_energy = 0.5 * (p**2) * (self.omega**2)
-
         return pot_energy + kin_energy
 
     def plot_trajectory(
