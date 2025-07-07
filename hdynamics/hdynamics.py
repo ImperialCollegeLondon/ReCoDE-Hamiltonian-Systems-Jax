@@ -24,6 +24,8 @@ class Dynamics(ABC):
         self.cdim = cdim
         self.pdim = cdim * 2
 
+        self.jac_h = jax.grad(self.H)
+
     @abstractmethod
     def H(self, x):
         """Return the Hamiltonian (energy) at phase space location x.
@@ -35,14 +37,6 @@ class Dynamics(ABC):
             float: Scalar energy value at x.
         """
         pass
-
-    def jac_h(self):
-        """Return a function that computes the gradient of the Hamiltonian with respect to x.
-
-        Returns:
-            Callable: A function grad(x) that returns the gradient of H at x.
-        """
-        return jax.grad(self.H)
 
     @staticmethod
     def symplectic_form(x):
@@ -68,13 +62,14 @@ class Dynamics(ABC):
     def get_rate_of_change(self):
         """Return a function grad_x(x, t) suitable for ODE integration.
 
+        The returned function computes the symplectic gradient of the Hamiltonian at each state x.
+
         Returns:
             Callable: A function grad_x(x, t) that returns the time derivative of x.
         """
-        jac_h = self.jac_h()
 
         def grad_x(x, t):
-            return self.symplectic_form(jac_h(x))
+            return self.symplectic_form(self.jac_h(x))
 
         return grad_x
 
