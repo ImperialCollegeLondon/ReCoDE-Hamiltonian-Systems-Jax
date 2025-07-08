@@ -4,11 +4,14 @@ In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and dem
 
 ## Learning Outcomes
 
-The main learning outcomes are to provide a:
+By studying this exemplar you will be better able to:
 
-- Basic understanding of conservative systems
-- Learn how to simulate dynamics using Jax in Python
-- Ability to visualise 1D and 2D dynamical systems
+* Use dynamical systems to model physical scenarios
+* Use JAX to solve ODEs and perform linear algebra operations
+* Visualise trajectories in 1D and 2D phase space
+* Organise code in an an object-oriented way
+
+## Estimated Duration
 
 | Task       | Time    |
 | ---------- | ------- |
