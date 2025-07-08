@@ -1,19 +1,23 @@
-# Deep dive in the code
+# Object-Oriented Design
 
-Before we start, we give an overview of the structure of the code.
+In this notebook, we'll explore the object-oriented design of the Hamiltonian systems code base, including explaining the design philosophy.
 
+## Inheritance
 
-## Object-oriented design
+The design of the code makes use of the fact that there are many different dynamical systems that can be described by Hamiltonian mechanics. By defining `Dynamics` as a base class, we can include components that are common to all dynamical systems in this class. This includes some more complex methods such as `generate_trajectory`, which indirectly uses the Hamiltonian method `H` to generate trajectories.
 
-To achieve a code base that can easily be extended to also incorporate new dynamical systems, we define an abstract dynamical system in `hdynamics.py` as an abstract class named `Dynamics`. This acts as a blueprint for any dynamical system, without defining the specifics (such as the Hamiltonian) of any dynamical system in particular.
+This makes reusing the entire code of this class easier, as we can simply inherit from this class when implementing a new dynamical system. The child class can then implement the Hamiltonian and any other system-specific functionality while still benefiting from the common features provided by the base class.
 
-By defining the Hamiltonian method `H` as an abstract method using the ```@abstratcmethod``` decorator we force any class that inherits from `Dynamics` to implement this method before it can be instantiated. This is useful because a dynamic system must always define a Hamiltonian (as this defines the dynamics) so it can be solved, and this is how we enforce that. The child classes can optionally define the methods ```plot_trajectory``` and ```plot_H```. These are not abstract methods, but may be overridden in child classes.
+## Abstract Class
 
-| Method      | Description |
-| ----------- | ----------- |
-| `H()`      | <b>REQUIRED</b> This is the Hamiltonian of a dynamical system, and has to be specified for any dynamical system that is being implemented.   |
-| `initial_phase()`   | <i>Already there.</i> This generates a random point in phase space and is already implemented.  |
-| `plot_phase()`   | <i>OPTIONAL</i> This is a method to plot the phase space, and is optional.    |
-| `plot_trajectory()`   | </i>OPTIONAL</i>  This is a method to plot the phase space, and is optional.      |
+By making `Dynamics` an abstract class, we prevent it from being instantiated directly. This is useful because `Dynamics` is not a specific dynamical system, but rather a blueprint for any dynamical system. The abstract class enforces that any child class must implement the Hamiltonian method `H`, which is essential for defining the dynamics of the system. `H` is a good example of an abstract method as it is relied upon by other methods in the `Dynamics` class, such as `generate_trajectory`.
 
-The Hamiltonian `H()` is the only method that is strictly required for any dynamical system. If we implement this method, we can simulate trajectories. We will see examples of this in the next 
+## Optional Methods
+
+The child classes can optionally define the method `plot_trajectory`. This method is not abstract, meaning that it is not required for the child class to implement it. If the method is called in a child class that does not implement it, it will raise a `NotImplementedError`. This allows for flexibility in the design, as not all dynamical systems may require a specific plotting method.
+
+## Caching
+
+In the different classes, some calculations are performed in the constructor and stored in instance variables. This is done to avoid recalculating these values repeatedly as the simulation progresses. For example, the `cdim` variable is calculated in the constructor and stored as an instance variable, so it can be reused in other methods without recalculating it each time.
+
+For example, in the `Dynamics` class, the `pdim` variable (representing the length of the phase vector) is calculated in the constructor and stored as an instance variable. The JAX function `jac_h` is also cached in the constructor to avoid recalculating it each time it is needed. This caching mechanism improves performance by reducing redundant calculations during the simulation. In the `NBody` class, the `mass_outer_product` variables is also calculated and cached in the constructor. This is possible because the mass of the bodies does not change during the simulation, so  the product of the masses can be calculated once in advance and reused throughout the simulation.
