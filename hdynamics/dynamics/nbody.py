@@ -1,7 +1,6 @@
 """Implementation of N-body system."""
 
 import jax.numpy as jnp
-import matplotlib.pyplot as plt
 
 from hdynamics.hdynamics import Dynamics
 
@@ -107,24 +106,17 @@ class Nbody(Dynamics):
         if self.dim != 2:
             raise NotImplementedError("N-body system plotting currently only supported for 2d systems")
 
-        # Get the default colour cycle from matplotlib
-        colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
-
         # Iterate over each body and plot its trajectory
         for object_i in range(self.n_bodies):
-            # Select a color for the current object
-            # Use modulo to cycle through colors if there are more objects than colors
-            color = colors[object_i % len(colors)]
-
             # Extract x and y coordinates for the current object
             points_x = trajectory[:, object_i * 2]
             points_y = trajectory[:, object_i * 2 + 1]
 
             # Draw line
-            ax.plot(points_x, points_y, linewidth=1, color=color, label=f"Body {object_i + 1}")
+            line = ax.plot(points_x, points_y, linewidth=1, label=f"Body {object_i + 1}")
 
-            # Draw points at end of line
-            ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=color)
+            # Draw points at end of line, using the color of the line
+            ax.scatter(points_x[-1], points_y[-1], s=20, marker="o", color=line[0].get_color())
 
         # Set labels and legend
         ax.set_xlabel("x")
