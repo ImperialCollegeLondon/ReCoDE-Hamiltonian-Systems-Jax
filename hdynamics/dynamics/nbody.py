@@ -21,7 +21,15 @@ class Nbody(Dynamics):
             n_bodies (int): Number of bodies in the system.
             gravity (float): Gravitational constant (default 1.0).
             masses (float or array): Mass of each body (scalar or array of length n_bodies).
+
+        Raises:
+            ValueError: If dim < 2 or n_bodies < 1.
         """
+        if dim < 2:
+            raise ValueError("dim must be at least 2 for N-body dynamics.")
+        if n_bodies < 1:
+            raise ValueError("n_bodies must be at least 1 for N-body dynamics.")
+
         phase_space_dim = dim * n_bodies
         super().__init__(phase_space_dim)
 
@@ -36,7 +44,7 @@ class Nbody(Dynamics):
             self.masses = masses
 
         # Precompute the outer product of masses for pairwise interactions
-        self.masses_outer = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
+        self.mass_outer_product = jnp.outer(self.masses, self.masses)  # (n_bodies, n_bodies)
 
     def H(self, x, eps=0.1):
         """Hamiltonian (total energy) of the N-body system.
@@ -69,7 +77,7 @@ class Nbody(Dynamics):
         # Use tril(..., -1) to sum only lower triangle (i < j), avoiding double-counting and self-interaction
         potential_energy = -self.gravity * jnp.sum(
             jnp.tril(
-                self.masses_outer / jnp.sqrt(pairwise_squared_distances + (eps**2)),
+                self.mass_outer_product / jnp.sqrt(pairwise_squared_distances + (eps**2)),
                 -1,
             )
         )
