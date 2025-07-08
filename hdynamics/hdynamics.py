@@ -24,7 +24,7 @@ class Dynamics(ABC):
         self.cdim = cdim
         self.pdim = cdim * 2
 
-        self.jac_h = jax.grad(self.H)
+        self.jac_h = jax.jit(jax.grad(self.H))
 
     @abstractmethod
     def H(self, x):
@@ -71,7 +71,7 @@ class Dynamics(ABC):
         def grad_x(x, t):
             return self.symplectic_form(self.jac_h(x))
 
-        return grad_x
+        return jax.jit(grad_x)
 
     def generate_trajectory(self, initial_conditions, stepsize, n_steps=500, rtol=1e-5, atol=1e-5):
         """Simulate a single trajectory using the system's ODE and initial state.
