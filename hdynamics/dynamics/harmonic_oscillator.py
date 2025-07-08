@@ -65,8 +65,6 @@ class HarmonicOscillator(Dynamics):
         """
         # Draw line
         line = ax.plot(t_span, trajectory[:, 0])
-        print(type(line))
-        print(len(line))
-        print(type(line[0]))
+
         # Draw point at end of line
         ax.scatter([t_span[-1]], [trajectory[-1, 0]], s=20, marker="o", color=line[0].get_color())
