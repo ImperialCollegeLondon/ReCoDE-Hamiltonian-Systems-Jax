@@ -4,7 +4,7 @@ In this ReCoDE exemplar, we introduce the basics of Hamiltonian dynamics and dem
 
 ## Getting Started
 
-To get started, proceed by going to the <a href="02Introduction-to-Hamiltonian-systems/">Introduction</a> page.
+To get started, proceed by going to the <a href="docs/01-Introduction-to-Hamiltonian-Systems.md/">Introduction</a> page.
 
 ## Learning Outcomes
 
@@ -12,16 +12,16 @@ The main learning outcomes are to provide a:
 
 - Basic understanding of conservative systems
 - Learn how to simulate dynamics using Jax in Python
-- Ability to visualise 2d and 3d dynamics
+- Ability to visualise 1D and 2D dynamical systems
 
 | Task       | Time    |
 | ---------- | ------- |
 | Reading    | 3 hours |
-| Practising | 3 hours |
+| Practising | 2 hours |
 
 ## Requirements
 
-Undergraduate level calculus, linear algebra and a basic understanding of physics are required.
+Undergraduate level calculus, linear algebra and a basic understanding of physics are required. Specific knowledge of Hamiltonian dynamics is not required, as we will introduce the necessary concepts in the course of this exemplar.
 
 ## License
 
