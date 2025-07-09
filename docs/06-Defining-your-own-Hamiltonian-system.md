@@ -38,7 +38,7 @@ This is the only necessary thing to define for our dynamical system to be valid.
 If you would like a suggestion of a simple Hamiltonian, you could use the example of a body free-falling in a gravitational field, which is defined as:
 
 $
-T = \frac{1}{2} m v^2\\
+T = \frac{p^{2}}{2m} \\
 V = -gz\\
 H = T + V
 $
